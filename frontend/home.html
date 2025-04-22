@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Horizon</title>
+    <!-- AOS for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+  </head>
+  <body
+    class="bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-500"
+  >
+    <!-- Navbar -->
+    <nav
+    class="flex items-center justify-between px-6 py-4 backdrop-blur-lg bg-white/10 dark:bg-gray-900/10 fixed w-full z-50 border-b border-purple-500/20"
+  >
+    <div class="text-2xl font-bold text-purple-500">Data Horizon</div>
+
+    <div class="space-x-8 text-lg font-medium hidden md:flex">
+      <a href="home.html" class="hover:text-purple-500">Home</a>
+      <a href="channels.html" class="hover:text-purple-500">Channels</a>
+      <a href="#" class="hover:text-purple-500">History</a>
+      <a href="#" class="hover:text-purple-500">Pricing</a>
+      <a href="#" class="hover:text-purple-500">API Docs</a>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <!-- Theme Toggle -->
+      <button id="themeToggle" class="text-xl">🌞</button>
+
+      <!-- Login/Signup (shown only if not logged in) -->
+      <div id="authButtons" class="flex items-center space-x-3">
+        <a
+          href="/login.html"
+          class="text-lg font-semibold hover:text-purple-500"
+          >Login</a
+        >
+        <a
+          href="/signup.html"
+          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+          >Sign Up</a
+        >
+      </div>
+
+      <!-- User Dropdown (shown if logged in) -->
+      <div id="userDropdownWrapper" class="relative hidden">
+        <button
+          id="userMenuBtn"
+          onclick="toggleUserDropdown()"
+          class="focus:outline-none"
+        >
+          <img
+            id="navProfilePic"
+            src="assets/user.png"
+            class="h-8 w-8 rounded-full object-cover"
+          />
+        </button>
+        <div
+          id="userDropdown"
+          class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-20"
+        >
+          <a
+            href="myprofile.html"
+            class="block px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+            >My Profile</a
+          >
+          <button
+            onclick="logout()"
+            class="w-full text-left px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <main class="pt-28 space-y-28">
+      <!-- Hero -->
+      <section class="text-center py-20 px-6">
+        <h1 class="text-5xl font-bold mb-4">
+          Empower Your IoT Journey with Data Horizon
+        </h1>
+        <p class="text-xl mb-8">
+          Seamlessly manage, analyze, and act on your IoT data in real-time.
+        </p>
+        <button onclick="window.location.href='channels.html'"
+        class="bg-purple-600 text-white px-6 py-3 text-lg rounded-xl hover:bg-purple-700">
+          Create Channel
+        </button>
+      </section>
+
+      <!-- 1. Powerful Features -->
+      <section class="py-20 bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="powerful-features">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4" data-aos="fade-up">Powerful Features for Your IoT Ecosystem</h2>
+          <p class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="100">Data Horizon offers everything you need to connect, monitor, and automate your IoT devices.</p>
+        </div>
+      
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Feature 1 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold mt-4">Real-Time Analytics</h3>
+            <p class="text-gray-400 mt-2">Monitor your IoT devices in real-time and gain insights from live data.</p>
+          </div>
+      
+          <!-- Feature 2 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-2xl font-semibold mt-4">Scalable Infrastructure</h3>
+            <p class="text-gray-400 mt-2">Scale your IoT operations effortlessly with a robust, cloud-based infrastructure.</p>
+          </div>
+      
+          <!-- Feature 3 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-2xl font-semibold mt-4">AI-Powered Insights</h3>
+            <p class="text-gray-400 mt-2">Unlock advanced analytics with AI-driven insights that guide business decisions.</p>
+          </div>
+        </div>
+      </section>
+      
+
+      <!-- 2. How Data Horizon Works -->
+      <section class="py-12 px-6 backdrop-blur-md bg-white/10 dark:bg-gray-900/10" id="how-it-works">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4" data-aos="fade-up">How Data Horizon Works</h2>
+          <p class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="100">From data collection to automation, experience the full power of IoT.</p>
+        </div>
+      
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Step 1 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up">
+            <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_m6j5igxb.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Collect Data</h3>
+            <p class="text-gray-400 mt-2">Gather data seamlessly from your IoT sensors and devices.</p>
+          </div>
+      
+          <!-- Step 2 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+            <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_4kx2q32n.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Secure Transmission</h3>
+            <p class="text-gray-400 mt-2">Encrypted data transmission for maximum security and reliability.</p>
+          </div>
+      
+          <!-- Step 3 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_EzPrWM.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Store & Process</h3>
+            <p class="text-gray-400 mt-2">Real-time storage and data processing with scalable infrastructure.</p>
+          </div>
+      
+          <!-- Step 4 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+            <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_jtbfg2nb.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Analyze with AI</h3>
+            <p class="text-gray-400 mt-2">Turn raw data into intelligent insights using machine learning.</p>
+          </div>
+      
+          <!-- Step 5 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_M9p23l.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Act & Automate</h3>
+            <p class="text-gray-400 mt-2">Trigger automated workflows and actions based on insights.</p>
+          </div>
+
+          <!-- step 6 -->
+          <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_2cgpknbo.json" background="transparent" speed="1" style="width: 100%; height: 200px;" autoplay loop></lottie-player>
+            <h3 class="text-2xl font-semibold mt-4">Powerful Visualization</h3>
+            <p class="text-gray-400 mt-2">Create beautiful, interactive charts and dashboards.</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 3. Empowering Industries -->
+      <!-- Empowering Industries with IoT Intelligence Section -->
+<section class="py-12 px-6 backdrop-blur-md bg-white/10 dark:bg-gray-900/10" id="empowering-industries">
+    <div class="max-w-7xl mx-auto text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4" data-aos="fade-up">Empowering Industries with IoT Intelligence</h2>
+      <p class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="100">Data Horizon provides innovative solutions to industries seeking to harness the full potential of IoT data.</p>
+    </div>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <!-- Industry 1: Smart Manufacturing -->
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        class="backdrop-blur-md bg-white/10 border border-purple-800/50 rounded-xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300"
+        data-aos="fade-up"
+      >
+        <div class="flex justify-center mb-6">
+          <img src="../frontend/assets/factories.jpg" alt="Smart Manufacturing" class="w-36 h-36 object-cover rounded-full" />
+        </div>
+        <h3 class="text-2xl font-semibold mb-4">Smart Manufacturing</h3>
+        <p class="text-gray-400">Leverage IoT to optimize production, reduce downtime, and increase efficiency in the manufacturing industry.</p>
+      </motion.div>
+  
+      <!-- Industry 2: Healthcare Innovation -->
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        class="backdrop-blur-md bg-white/10 border border-purple-800/50 rounded-xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <div class="flex justify-center mb-6">
+          <img src="./assets/healthcare.jpg" alt="Healthcare Innovation" class="w-36 h-36 object-cover rounded-full" />
+        </div>
+        <h3 class="text-2xl font-semibold mb-4">Healthcare Innovation</h3>
+        <p class="text-gray-400">Improve patient care and operational efficiency by monitoring IoT-enabled devices in healthcare systems.</p>
+      </motion.div>
+  
+      <!-- Industry 3: Smart Cities -->
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        class="backdrop-blur-md bg-white/10 border border-purple-800/50 rounded-xl p-6 hover:shadow-[0_0_20px_3px_rgba(168,85,247,0.5)] transition-all duration-300"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <div class="flex justify-center mb-6">
+          <img src="./assets/smartcity.jpg" alt="Smart Cities" class="w-36 h-36 object-cover rounded-full" />
+        </div>
+        <h3 class="text-2xl font-semibold mb-4">Smart Cities</h3>
+        <p class="text-gray-400">Transform urban infrastructure by connecting IoT sensors to improve services like traffic management and waste collection.</p>
+      </motion.div>
+    </div>
+  </section>
+  
+
+      <!-- 4. Seamless API Integration -->
+      <section class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Seamless API Integration</h2>
+        <div class="glass-card p-6 text-left">
+          <p class="mb-4">
+            Easily integrate Data Horizon with your apps using our
+            developer-friendly API:
+          </p>
+          <pre
+            class="bg-black text-purple-400 p-4 rounded-lg overflow-x-auto text-sm"
+          ><code>
+POST /api/v1/data HTTP/1.1
+Host: api.datahorizon.io
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "device_id": "dev_123456",
+  "temperature": 23.5,
+  "humidity": 60,
+  "timestamp": "2023-06-15T14:30:00Z"
+}
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- 5. Testimonials -->
+      <section class="py-20 px-6 backdrop-blur-md bg-white/10 dark:bg-gray-900/10" id="testimonials">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4" data-aos="fade-up">What Our Customers Say</h2>
+          <p class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="100">Hear from our clients about how Data Horizon has transformed their business.</p>
+        </div>
+      
+        <!-- Testimonial Slider -->
+        <div class="relative">
+          <div class="overflow-hidden">
+            <div class="flex space-x-8 animate-slide">
+              <!-- Testimonial 1 -->
+              <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 w-80">
+                <p class="text-gray-400 italic">"Data Horizon revolutionized how we manage and analyze our data. The AI-driven insights are a game-changer!"</p>
+                <h4 class="text-xl font-semibold mt-4">John Doe</h4>
+                <p class="text-purple-400">CTO, IoT Solutions</p>
+              </div>
+      
+              <!-- Testimonial 2 -->
+              <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 w-80">
+                <p class="text-gray-400 italic">"We've significantly reduced operational costs by utilizing Data Horizon's real-time analytics."</p>
+                <h4 class="text-xl font-semibold mt-4">Jane Smith</h4>
+                <p class="text-purple-400">CEO, Tech Innovations</p>
+              </div>
+      
+              <!-- Testimonial 3 -->
+              <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 w-80">
+                <p class="text-gray-400 italic">"The seamless integration with our existing systems was incredible. Data Horizon's API is easy to use and powerful."</p>
+                <h4 class="text-xl font-semibold mt-4">James Wilson</h4>
+                <p class="text-purple-400">Lead Engineer, SmartTech</p>
+              </div>
+
+              <!-- Testimonial 4 -->
+              <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 w-80">
+                <p class="text-gray-400 italic">"The seamless integration with our existing systems was incredible. Data Horizon's API is easy to use and powerful."</p>
+                <h4 class="text-xl font-semibold mt-4">Steve  Harvey</h4>
+                <p class="text-purple-400">Lead Engineer, PureTech</p>
+              </div>
+
+              <!-- Testimonial 5 -->
+              <div class="backdrop-blur-md bg-white/5 border border-purple-800/20 rounded-2xl p-6 w-80">
+                <p class="text-gray-400 italic">"The seamless integration with our existing systems was incredible. Data Horizon's API is easy to use and powerful."</p>
+                <h4 class="text-xl font-semibold mt-4">Jayden Jackson</h4>
+                <p class="text-purple-400">Lead Engineer, ISmart</p>
+              </div>
+            </div>
+          </div>
+      </section>
+      
+      <!-- Ready to Transform Your IoT Data Section -->
+      <section class="py-20 px-6 backdrop-blur-md bg-white/10 dark:bg-gray-900/10" id="cta">
+        <div class="max-w-6xl mx-auto text-center">
+          <h2 class="text-4xl font-bold mb-4">Ready to Transform Your IoT Data?</h2>
+          <p class="text-lg text-gray-400 mb-6">Join thousands of companies using Data Horizon to unlock insights from their IoT devices.</p>
+      
+          <!-- CTA Buttons -->
+          <div class="flex justify-center gap-8">
+            <button class="bg-purple-600 text-white px-8 py-3 rounded-xl">Start Free Trial</button>
+            <button class="bg-transparent border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-xl">View Pricing</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="backdrop-blur-md bg-white/10 dark:bg-gray-900/10 border-t border-purple-800/20 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
+          
+          <!-- Left: Brand Info -->
+          <div>
+            <h3 class="text-2xl font-bold text-purple-500">Data Horizon</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Empowering IoT with intelligence & insight.</p>
+          </div>
+      
+          <!-- Center: Links -->
+          <div class="flex space-x-6 text-sm text-gray-600 dark:text-gray-400">
+            <a href="#powerful-features" class="hover:text-purple-400 transition">Features</a>
+            <a href="#how-it-works" class="hover:text-purple-400 transition">How It Works</a>
+            <a href="#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+            <a href="#cta" class="hover:text-purple-400 transition">Get Started</a>
+          </div>
+      
+          <!-- Right: Copyright -->
+          <div class="text-sm text-gray-600 dark:text-gray-400">
+            © <span id="year"></span> Data Horizon. All rights reserved.
+          </div>
+        </div>
+      </footer>
+      
+    </main>
+
+    <style>
+      .glass-card {
+        @apply bg-white/10 dark:bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-xl text-center transition-all hover:scale-105 hover:shadow-[0_0_25px_#8b5cf6];
+      }
+      .testimonial-slider {
+        animation: slide 12s infinite;
+      }
+      @keyframes slide {
+        0%,
+        20% {
+          transform: translateX(0%);
+        }
+        25%,
+        45% {
+          transform: translateX(-100%);
+        }
+        50%,
+        70% {
+          transform: translateX(-200%);
+        }
+        75%,
+        100% {
+          transform: translateX(0%);
+        }
+      }
+    </style>
+
+<script>
+  // Theme toggle
+  const toggle = document.getElementById("themeToggle");
+  toggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    toggle.textContent = document.documentElement.classList.contains("dark")
+      ? "🌙"
+      : "🌞";
+  });
+
+  function logout() {
+    localStorage.setItem("loggedIn", "false");
+    location.reload();
+  }
+
+  // Toggle user dropdown
+  function toggleUserDropdown() {
+    const dropdown = document.getElementById("userDropdown");
+    dropdown.classList.toggle("hidden");
+  }
+
+  // Set profile picture if uploaded
+  const savedImg = localStorage.getItem("profileImage");
+  const navPic = document.getElementById("navProfilePic");
+
+  if (savedImg && navPic) {
+    navPic.src = savedImg;
+  }
+
+  // Logout function
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("profileImage");
+    location.href = "/login.html";
+  }
+
+  // Show dropdown only if logged in
+  if (localStorage.getItem("loggedIn")) {
+    document
+      .getElementById("userDropdownWrapper")
+      .classList.remove("hidden");
+  }
+
+  function toggleForm() {
+    const form = document.getElementById("channelForm");
+    form.classList.toggle("hidden");
+  }
+
+  function toggleLocation() {
+    const locationFields = document.getElementById("locationFields");
+    locationFields.classList.toggle("hidden");
+  }
+</script>
+
+    <script>
+        AOS.init();
+    </script>
+
+          <!-- Auto-update year -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  
+  </body>
+</html>
