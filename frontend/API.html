@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Docs - Data Horizon</title>
+
+    <!-- AOS for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Prism.js for syntax highlighting -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+    <!-- Clipboard.js for copy buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+  </head>
+
+  <body
+    class="bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-500"
+  >
+    <nav
+      class="flex items-center justify-between px-6 py-4 backdrop-blur-lg bg-white/10 dark:bg-gray-900/10 fixed w-full z-50 border-b border-purple-500/20"
+    >
+      <div class="text-2xl font-bold text-purple-500">Data Horizon</div>
+
+      <div class="space-x-8 text-lg font-medium hidden md:flex">
+        <a href="home.html" class="hover:text-purple-500">Home</a>
+        <a href="channels.html" class="hover:text-purple-500">Channels</a>
+        <a href="#" class="hover:text-purple-500">History</a>
+        <a href="pricing.html" class="hover:text-purple-500">Pricing</a>
+        <a href="API.html" class="hover:text-purple-500">API Docs</a>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <label for="themeToggle" class="cursor-pointer flex items-center space-x-2">
+          <div class="relative">
+            <input type="checkbox" id="themeToggle" class="sr-only">
+            <div class="w-12 h-6 bg-gray-300 dark:bg-gray-700 rounded-full shadow-inner"></div>
+            <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition transform dark:translate-x-6"></div>
+          </div>
+          <span class="text-sm text-gray-800 dark:text-gray-200">Dark Mode</span>
+        </label>
+
+        <!-- Login/Signup (shown only if not logged in) -->
+        <div id="authButtons" class="flex items-center space-x-3">
+          <a
+            href="/login.html"
+            class="text-lg font-semibold hover:text-purple-500"
+            >Login</a
+          >
+          <a
+            href="/signup.html"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+            >Sign Up</a
+          >
+        </div>
+
+        <!-- User Dropdown (shown if logged in) -->
+        <div id="userDropdownWrapper" class="relative hidden">
+          <button
+            id="userMenuBtn"
+            onclick="toggleUserDropdown()"
+            class="focus:outline-none"
+          >
+            <img
+              id="navProfilePic"
+              src="assets/user.png"
+              class="h-8 w-8 rounded-full object-cover"
+            />
+          </button>
+          <div
+            id="userDropdown"
+            class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-20"
+          >
+            <a
+              href="myprofile.html"
+              class="block px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+              >My Profile</a
+            >
+            <button
+              onclick="logout()"
+              class="w-full text-left px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="pt-28 pb-16 text-center max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <!-- Tabs -->
+      <div
+        class="bg-gray-900/50 border border-gray-800 mb-6 rounded-lg overflow-hidden"
+      >
+        <div class="flex" id="tabs">
+          <button class="tab px-4 py-2 w-full text-center" data-tab="channels">
+            Channels
+          </button>
+          <button class="tab px-4 py-2 w-full text-center" data-tab="devices">
+            Devices
+          </button>
+          <button class="tab px-4 py-2 w-full text-center" data-tab="data">
+            Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div id="tab-content">
+        <div class="tab-pane hidden" data-content="channels">
+          <div class="space-y-4">
+            <!-- GET /channels -->
+            <details
+              class="bg-gray-800 rounded-lg p-4"
+              onclick="typeCurl('curl-channels-get', curlGetText)"
+            >
+              <summary class="cursor-pointer text-green-400 font-mono mb-2">
+                GET /channels
+              </summary>
+              <p class="text-white mb-2">List all channels</p>
+
+              <div class="relative group">
+                <button
+                  class="copy-btn absolute top-2 right-2 bg-purple-700 hover:bg-purple-600 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                  data-clipboard-target="#curl-channels-get"
+                >
+                  Copy
+                </button>
+                <pre><code id="curl-channels-get" class="language-bash whitespace-pre-line" data-typed="false"></code></pre>
+              </div>
+
+              <pre><code class="language-json">{
+  "channels": [
+    {
+      "id": "ch_123456",
+      "name": "Home Sensors",
+      "description": "Temperature and humidity sensors at home",
+      "created_at": "2023-04-15T10:30:00Z",
+      "device_count": 3
+    }
+  ]
+}</code></pre>
+            </details>
+
+            <!-- POST /channels -->
+            <details
+              class="bg-gray-800 rounded-lg p-4"
+              onclick="typeCurl('curl-channels-post', curlPostText)"
+            >
+              <summary class="cursor-pointer text-yellow-400 font-mono mb-2">
+                POST /channels
+              </summary>
+              <p class="text-white mb-2">Create a new channel</p>
+
+              <div class="relative group">
+                <button
+                  class="copy-btn absolute top-2 right-2 bg-purple-700 hover:bg-purple-600 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                  data-clipboard-target="#curl-channels-post"
+                >
+                  Copy
+                </button>
+                <pre><code id="curl-channels-post" class="language-bash whitespace-pre-line" data-typed="false"></code></pre>
+              </div>
+
+              <pre><code class="language-json">{
+  "id": "ch_345678",
+  "name": "New Channel",
+  "description": "My new IoT channel",
+  "created_at": "2023-06-10T09:45:00Z",
+  "device_count": 0
+}</code></pre>
+            </details>
+          </div>
+        </div>
+
+        <!-- Add your Devices and Data tab-pane content here -->
+        <div class="tab-pane hidden" data-content="devices">
+          <p class="text-gray-600 dark:text-gray-400">
+            Devices API documentation coming soon.
+          </p>
+        </div>
+        <div class="tab-pane hidden" data-content="data">
+          <p class="text-gray-600 dark:text-gray-400">
+            Data API documentation coming soon.
+          </p>
+        </div>
+      </div>
+    </section>
+
+        <section class="mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white" >Code Examples</h2>
+
+          <div class="flex space-x-4 mb-6">
+            <button
+              class="tab-btn bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-700 px-4 py-2 rounded active"
+              onclick="switchTab('javascript', this)"
+            >
+              JavaScript
+            </button>
+            <button
+              class="tab-btn bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-700 px-4 py-2 rounded"
+              onclick="switchTab('python', this)"
+            >
+              Python
+            </button>
+            <button
+              class="tab-btn bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-700 px-4 py-2 rounded"
+              onclick="switchTab('arduino', this)"
+            >
+              Arduino
+            </button>
+          </div>
+
+          <div
+            class="bg-gray-800 dark:bg-black text-white dark:text-white p-6 rounded-lg border border-black min-h-[300px] overflow-x-auto"
+          >
+            <pre
+              id="code-display"
+              class="text-sm font-mono whitespace-pre-wrap"
+            ></pre>
+          </div>
+        </section>
+
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold text-white mb-6 text-center">
+            API Playground
+          </h2>
+
+          <div
+            class="bg-[#1e1e2f] border border-purple-900/50 rounded-2xl shadow-lg p-6 max-w-3xl mx-auto"
+          >
+            <div class="mb-4">
+              <h3 class="text-xl font-semibold text-white">
+                Test API Requests
+              </h3>
+              <p class="text-sm text-gray-400">
+                Try out API requests directly in your browser
+              </p>
+            </div>
+
+            <div id="api-playground" class="mt-4">
+              <form class="space-y-4">
+                <div>
+                  <label
+                    class="block text-sm text-gray-300 mb-1"
+                    for="api-endpoint"
+                    >Endpoint</label
+                  >
+                  <input
+                    type="text"
+                    id="api-endpoint"
+                    placeholder="https://api.datahorizon.io/v1/data"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm text-gray-300 mb-1" for="api-key"
+                    >API Key</label
+                  >
+                  <input
+                    type="text"
+                    id="api-key"
+                    placeholder="YOUR_DEVICE_API_KEY"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm text-gray-300 mb-1" for="payload"
+                    >Payload (JSON)</label
+                  >
+                  <textarea
+                    id="payload"
+                    rows="4"
+                    placeholder='{"temperature":23.5,"humidity":65}'
+                    class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="bg-purple-700 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded-lg transition-all"
+                >
+                  Send Request
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <footer class="backdrop-blur-md bg-white/10 dark:bg-gray-900/10 border-t border-purple-800/20 py-8 mt-20">
+          <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
+            
+            <!-- Left: Brand Info -->
+            <div>
+              <h3 class="text-2xl font-bold text-purple-500">Data Horizon</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Empowering IoT with intelligence & insight.</p>
+            </div>
+        
+            <!-- Center: Links -->
+            <div class="flex space-x-6 text-sm text-gray-600 dark:text-gray-400">
+              <a href="#powerful-features" class="hover:text-purple-400 transition">Features</a>
+              <a href="#how-it-works" class="hover:text-purple-400 transition">How It Works</a>
+              <a href="#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+              <a href="#cta" class="hover:text-purple-400 transition">Get Started</a>
+            </div>
+        
+            <!-- Right: Copyright -->
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              © <span id="year"></span> Data Horizon. All rights reserved.
+            </div>
+          </div>
+        </footer>
+
+        <script>
+          function showTab(tab) {
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((el) => el.classList.add("hidden"));
+            document.getElementById("tab-" + tab).classList.remove("hidden");
+
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((el) => el.classList.remove("bg-gray-800"));
+            event.target.classList.add("bg-gray-800");
+          }
+
+          // Show JavaScript tab by default
+          showTab("javascript");
+        </script>
+
+        <!-- JavaScript Logic -->
+        <script>
+          const curlGetText = `curl -X GET "https://api.datahorizon.io/v1/channels" \\\n  -H "Authorization: Bearer YOUR_API_KEY"`;
+          const curlPostText = `curl -X POST "https://api.datahorizon.io/v1/channels" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+  "name": "New Channel",
+  "description": "My new IoT channel"
+}`;
+
+          function typeCurl(id, text) {
+            const el = document.getElementById(id);
+            if (el.dataset.typed === "true") return;
+
+            el.textContent = "";
+            let i = 0;
+            const interval = setInterval(() => {
+              el.textContent += text.charAt(i);
+              i++;
+              if (i >= text.length) {
+                clearInterval(interval);
+                el.dataset.typed = "true";
+                Prism.highlightElement(el);
+              }
+            }, 15);
+          }
+
+          // Tabs
+          const tabs = document.querySelectorAll(".tab");
+          const panes = document.querySelectorAll(".tab-pane");
+
+          tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              const selected = tab.dataset.tab;
+
+              tabs.forEach((t) => t.classList.remove("bg-purple-600"));
+              tab.classList.add("bg-purple-600");
+
+              panes.forEach((p) => {
+                p.classList.toggle("hidden", p.dataset.content !== selected);
+              });
+            });
+          });
+
+          tabs[0].click(); // default to first tab
+
+          // Copy buttons
+          new ClipboardJS(".copy-btn").on("success", function (e) {
+            const btn = e.trigger;
+            btn.textContent = "Copied!";
+            setTimeout(() => (btn.textContent = "Copy"), 1500);
+          });
+          // Theme toggle
+          const toggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  document.documentElement.classList.add("dark");
+  toggle.checked = true;
+}
+
+// Toggle theme on switch
+toggle.addEventListener("change", () => {
+  const isDark = toggle.checked;
+  document.documentElement.classList.toggle("dark", isDark);
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+});
+
+          function logout() {
+            localStorage.setItem("loggedIn", "false");
+            location.reload();
+          }
+
+          // Toggle user dropdown
+          function toggleUserDropdown() {
+            const dropdown = document.getElementById("userDropdown");
+            dropdown.classList.toggle("hidden");
+          }
+
+          // Set profile picture if uploaded
+          const savedImg = localStorage.getItem("profileImage");
+          const navPic = document.getElementById("navProfilePic");
+
+          if (savedImg && navPic) {
+            navPic.src = savedImg;
+          }
+
+          // Logout function
+          function logout() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("profileImage");
+            location.href = "/login.html";
+          }
+
+          // Show dropdown only if logged in
+          if (localStorage.getItem("loggedIn")) {
+            document
+              .getElementById("userDropdownWrapper")
+              .classList.remove("hidden");
+          }
+
+          function toggleForm() {
+            const form = document.getElementById("channelForm");
+            form.classList.toggle("hidden");
+          }
+
+          function toggleLocation() {
+            const locationFields = document.getElementById("locationFields");
+            locationFields.classList.toggle("hidden");
+          }
+        </script>
+
+        <script>
+          const codes = {
+            javascript: `// Using fetch API to send data
+const API_KEY = 'YOUR_DEVICE_API_KEY';
+const API_URL = 'https://api.datahorizon.io/v1/data';
+
+async function sendSensorData(temperature, humidity) {
+try {
+const response = await fetch(API_URL, {
+  method: 'POST',
+  headers: {
+    'Authorization': \`Bearer \${API_KEY}\`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    temperature,
+    humidity,
+    timestamp: new Date().toISOString()
+  })
+});
+const data = await response.json();
+console.log('Data sent successfully:', data);
+return data;
+} catch (error) {
+console.error('Error sending data:', error);
+throw error;
+}
+}
+
+// Example usage
+sendSensorData(23.5, 65);`,
+
+            python: `import requests
+import json
+from datetime import datetime
+
+API_KEY = 'YOUR_DEVICE_API_KEY'
+API_URL = 'https://api.datahorizon.io/v1/data'
+
+def send_sensor_data(temperature, humidity):
+headers = {
+'Authorization': f'Bearer {API_KEY}',
+'Content-Type': 'application/json'
+}
+
+payload = {
+'temperature': temperature,
+'humidity': humidity,
+'timestamp': datetime.now().isoformat()
+}
+
+try:
+response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
+response.raise_for_status()
+print('Data sent successfully:', response.json())
+return response.json()
+except requests.exceptions.RequestException as e:
+print('Error sending data:', e)
+raise
+
+# Example usage
+send_sensor_data(23.5, 65)`,
+
+            arduino: `#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+#include <ArduinoJson.h>
+#include <DHT.h>
+
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+const char* apiKey = "YOUR_DEVICE_API_KEY";
+const char* apiUrl = "https://api.datahorizon.io/v1/data";
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+Serial.begin(115200);
+dht.begin();
+
+WiFi.begin(ssid, password);
+while (WiFi.status() != WL_CONNECTED) {
+delay(1000);
+Serial.println("Connecting to WiFi...");
+}
+
+Serial.println("Connected to WiFi");
+}
+
+void loop() {
+if (WiFi.status() == WL_CONNECTED) {
+float temperature = dht.readTemperature();
+float humidity = dht.readHumidity();
+
+if (isnan(temperature) || isnan(humidity)) {
+  Serial.println("Failed to read from DHT sensor!");
+} else {
+  sendSensorData(temperature, humidity);
+}
+}
+delay(60000); // Send data every minute
+}
+
+void sendSensorData(float temperature, float humidity) {
+HTTPClient http;
+WiFiClientSecure client;
+client.setInsecure(); // Skip certificate verification
+
+http.begin(client, apiUrl);
+http.addHeader("Authorization", String("Bearer ") + apiKey);
+http.addHeader("Content-Type", "application/json");
+
+StaticJsonDocument<200> doc;
+doc["temperature"] = temperature;
+doc["humidity"] = humidity;
+
+String payload;
+serializeJson(doc, payload);
+
+int httpResponseCode = http.POST(payload);
+
+if (httpResponseCode > 0) {
+String response = http.getString();
+Serial.println("HTTP Response code: " + String(httpResponseCode));
+Serial.println("Response: " + response);
+} else {
+Serial.println("Error on sending POST: " + String(httpResponseCode));
+}
+
+http.end();
+}`,
+          };
+
+          let currentTab = "javascript";
+          let typingTimer;
+
+          function typeCode(text, element, speed = 10) {
+            let i = 0;
+            element.textContent = "";
+            clearInterval(typingTimer);
+            typingTimer = setInterval(() => {
+              if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+              } else {
+                clearInterval(typingTimer);
+              }
+            }, speed);
+          }
+
+          function switchTab(tab, clickedButton) {
+            currentTab = tab;
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((btn) => btn.classList.remove("active", "bg-gray-700"));
+            clickedButton.classList.add("active", "bg-gray-700");
+
+            const codeElement = document.getElementById("code-display");
+            typeCode(codes[tab], codeElement);
+          }
+
+          // Initialize
+          window.onload = () => {
+            const codeElement = document.getElementById("code-display");
+            typeCode(codes[currentTab], codeElement);
+          };
+        </script>
+
+        <script>
+          AOS.init();
+        </script>
+
+        <!-- Auto-update year -->
+        <script>
+          document.getElementById("year").textContent =
+            new Date().getFullYear();
+        </script>
+      </body>
+    </html>
+  </body>
+</html>
