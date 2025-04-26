@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pricing | Data Horizon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+  </head>
+  <body
+    class="bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-500"
+  >
+    <nav
+      class="flex items-center justify-between px-6 py-4 backdrop-blur-lg bg-white/10 dark:bg-gray-900/10 fixed w-full z-50 border-b border-purple-500/20"
+    >
+      <div class="text-2xl font-bold text-purple-500">Data Horizon</div>
+
+      <div class="space-x-8 text-lg font-medium hidden md:flex">
+        <a href="home.html" class="hover:text-purple-500">Home</a>
+        <a href="channels.html" class="hover:text-purple-500">Channels</a>
+        <a href="#" class="hover:text-purple-500">History</a>
+        <a href="pricing.html" class="hover:text-purple-500">Pricing</a>
+        <a href="API.html" class="hover:text-purple-500">API Docs</a>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <label for="themeToggle" class="cursor-pointer flex items-center space-x-2">
+          <div class="relative">
+            <input type="checkbox" id="themeToggle" class="sr-only">
+            <div class="w-12 h-6 bg-gray-300 dark:bg-gray-700 rounded-full shadow-inner"></div>
+            <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition transform dark:translate-x-6"></div>
+          </div>
+          <span class="text-sm text-gray-800 dark:text-gray-200">Dark Mode</span>
+        </label>
+
+        <!-- Login/Signup (shown only if not logged in) -->
+        <div id="authButtons" class="flex items-center space-x-3">
+          <a
+            href="/login.html"
+            class="text-lg font-semibold hover:text-purple-500"
+            >Login</a
+          >
+          <a
+            href="/signup.html"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+            >Sign Up</a
+          >
+        </div>
+
+        <!-- User Dropdown (shown if logged in) -->
+        <div id="userDropdownWrapper" class="relative hidden">
+          <button
+            id="userMenuBtn"
+            onclick="toggleUserDropdown()"
+            class="focus:outline-none"
+          >
+            <img
+              id="navProfilePic"
+              src="assets/user.png"
+              class="h-8 w-8 rounded-full object-cover"
+            />
+          </button>
+          <div
+            id="userDropdown"
+            class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-20"
+          >
+            <a
+              href="myprofile.html"
+              class="block px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+              >My Profile</a
+            >
+            <button
+              onclick="logout()"
+              class="w-full text-left px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header class="pt-28 py-8 text-center">
+      <h1 class="text-4xl font-bold">Choose Your Plan</h1>
+      <p class="text-gray-400 mt-2">
+        Flexible pricing for developers, teams, and enterprises
+      </p>
+    </header>
+
+    <main
+      class="max-w-7xl mx-auto px-4 grid gap-8 grid-cols-1 md:grid-cols-3 mb-16"
+    >
+      <!-- Free Plan -->
+      <div
+        class="bg-[#1e1e2f] rounded-2xl border border-gray-800 shadow-md p-8 flex flex-col"
+      >
+        <h2 class="text-xl text-white font-bold mb-2">Free</h2>
+        <p class="text-gray-400 mb-6">Ideal for testing & learning.</p>
+        <div class="text-4xl text-white font-extrabold mb-6">
+          $0<span class="text-base font-normal text-white text-gray-400"
+            >/mo</span
+          >
+        </div>
+        <ul class="text-white space-y-3 mb-8">
+          <li>✅ 1 Channel</li>
+          <li>✅ 10 API Calls / day</li>
+          <li>✅ Basic Analytics</li>
+          <li>❌ Team Collaboration</li>
+          <li>❌ AI Insights</li>
+        </ul>
+        <button
+          class="mt-auto bg-purple-600 hover:bg-purple-700 w-full py-2 rounded-lg font-medium"
+        >
+          Get Started
+        </button>
+      </div>
+
+      <!-- Pro Plan -->
+      <div
+        class="bg-gradient-to-br from-purple-800 to-purple-600 rounded-2xl shadow-lg p-8 flex flex-col border-4 border-purple-700"
+      >
+        <h2 class="text-xl text-white font-bold mb-2">Pro</h2>
+        <p class="text-white/90 mb-6">
+          Perfect for professionals and startups.
+        </p>
+        <div class="text-4xl text-white font-extrabold mb-6">
+          $29<span class="text-base font-normal text-white/70">/mo</span>
+        </div>
+        <ul class="text-white space-y-3 mb-8">
+          <li>✅ 10 Channels</li>
+          <li>✅ 10,000 API Calls / mo</li>
+          <li>✅ Advanced Analytics</li>
+          <li>✅ Team Collaboration</li>
+          <li>❌ AI Insights</li>
+        </ul>
+        <button
+          class="mt-auto bg-white text-purple-800 hover:bg-gray-100 w-full py-2 rounded-lg font-semibold"
+        >
+          Upgrade Now
+        </button>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div
+        class="bg-[#1e1e2f] rounded-2xl border border-gray-800 shadow-md p-8 flex flex-col"
+      >
+        <h2 class="text-xl text-white font-bold mb-2">Enterprise</h2>
+        <p class="text-gray-400 mb-6">
+          For large scale applications and teams.
+        </p>
+        <div class="text-4xl text-white font-extrabold mb-6">
+          Custom<span class="text-base font-normal text-white">/mo</span>
+        </div>
+        <ul class="space-y-3 mb-8 text-white">
+          <li>✅ Unlimited Channels</li>
+          <li>✅ Unlimited API Calls</li>
+          <li>✅ Premium Support</li>
+          <li>✅ AI Insights</li>
+          <li>✅ SLA & Custom Integrations</li>
+        </ul>
+        <button
+          class="mt-auto bg-purple-600 hover:bg-purple-700 w-full py-2 rounded-lg font-medium"
+        >
+          Contact Sales
+        </button>
+      </div>
+    </main>
+
+    <footer
+      class="backdrop-blur-md bg-white/10 dark:bg-gray-900/10 border-t border-purple-800/20 py-8 mt-20"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0"
+      >
+        <!-- Left: Brand Info -->
+        <div>
+          <h3 class="text-2xl font-bold text-purple-500">Data Horizon</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Empowering IoT with intelligence & insight.
+          </p>
+        </div>
+
+        <!-- Center: Links -->
+        <div class="flex space-x-6 text-sm text-gray-600 dark:text-gray-400">
+          <a href="#powerful-features" class="hover:text-purple-400 transition"
+            >Features</a
+          >
+          <a href="#how-it-works" class="hover:text-purple-400 transition"
+            >How It Works</a
+          >
+          <a href="#testimonials" class="hover:text-purple-400 transition"
+            >Testimonials</a
+          >
+          <a href="#cta" class="hover:text-purple-400 transition"
+            >Get Started</a
+          >
+        </div>
+
+        <!-- Right: Copyright -->
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          © <span id="year"></span> Data Horizon. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Theme toggle
+      const toggle = document.getElementById("themeToggle");
+
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.documentElement.classList.add("dark");
+    toggle.checked = true;
+  }
+
+  // Toggle theme on switch
+  toggle.addEventListener("change", () => {
+    const isDark = toggle.checked;
+    document.documentElement.classList.toggle("dark", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+      function logout() {
+        localStorage.setItem("loggedIn", "false");
+        location.reload();
+      }
+
+      // Toggle user dropdown
+      function toggleUserDropdown() {
+        const dropdown = document.getElementById("userDropdown");
+        dropdown.classList.toggle("hidden");
+      }
+
+      // Set profile picture if uploaded
+      const savedImg = localStorage.getItem("profileImage");
+      const navPic = document.getElementById("navProfilePic");
+
+      if (savedImg && navPic) {
+        navPic.src = savedImg;
+      }
+
+      // Logout function
+      function logout() {
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("profileImage");
+        location.href = "/login.html";
+      }
+
+      // Show dropdown only if logged in
+      if (localStorage.getItem("loggedIn")) {
+        document
+          .getElementById("userDropdownWrapper")
+          .classList.remove("hidden");
+      }
+
+      function toggleForm() {
+        const form = document.getElementById("channelForm");
+        form.classList.toggle("hidden");
+      }
+
+      function toggleLocation() {
+        const locationFields = document.getElementById("locationFields");
+        locationFields.classList.toggle("hidden");
+      }
+    </script>
+
+    <script>
+      AOS.init();
+    </script>
+
+    <!-- Auto-update year -->
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

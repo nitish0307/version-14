@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile - Data Horizon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+
+  <!-- Include Navbar Here -->
+  <nav
+  class="flex items-center justify-between px-6 py-4 backdrop-blur-lg bg-white/10 dark:bg-gray-900/10 fixed w-full z-50 border-b border-purple-500/20"
+>
+  <div class="text-2xl font-bold text-purple-500">Data Horizon</div>
+
+  <div class="space-x-8 text-lg font-medium hidden md:flex">
+    <a href="home.html" class="hover:text-purple-500">Home</a>
+    <a href="channels.html" class="hover:text-purple-500">Channels</a>
+    <a href="#" class="hover:text-purple-500">History</a>
+    <a href="#" class="hover:text-purple-500">Pricing</a>
+    <a href="#" class="hover:text-purple-500">API Docs</a>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <!-- Theme Toggle -->
+    <label for="themeToggle" class="cursor-pointer flex items-center space-x-2">
+      <div class="relative">
+        <input type="checkbox" id="themeToggle" class="sr-only">
+        <div class="w-12 h-6 bg-gray-300 dark:bg-gray-700 rounded-full shadow-inner"></div>
+        <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition transform dark:translate-x-6"></div>
+      </div>
+      <span class="text-sm text-gray-800 dark:text-gray-200">Dark Mode</span>
+    </label>
+
+    <!-- Login/Signup (shown only if not logged in) -->
+    <div id="authButtons" class="flex items-center space-x-3">
+      <a
+        href="/login.html"
+        class="text-lg font-semibold hover:text-purple-500"
+        >Login</a
+      >
+      <a
+        href="/signup.html"
+        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+        >Sign Up</a
+      >
+    </div>
+
+    <!-- User Dropdown (shown if logged in) -->
+    <div id="userDropdownWrapper" class="relative hidden">
+      <button
+        id="userMenuBtn"
+        onclick="toggleUserDropdown()"
+        class="focus:outline-none"
+      >
+        <img
+          id="navProfilePic"
+          src="assets/user.png"
+          class="h-8 w-8 rounded-full object-cover"
+        />
+      </button>
+      <div
+        id="userDropdown"
+        class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-20"
+      >
+        <button
+          onclick="logout()"
+          class="w-full text-left px-4 py-2 text-sm hover:bg-purple-100 dark:hover:bg-purple-800"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <main class="pt-24 px-6 max-w-3xl mx-auto">
+    <h1 class="text-4xl font-bold mb-8 text-center">My Profile</h1>
+
+    <div class="bg-white/10 dark:bg-gray-900/30 border border-purple-500/20 backdrop-blur-md rounded-2xl p-6 shadow-lg">
+      <div class="flex flex-col items-center mb-8">
+        <img id="profileImage" src="assets/default-avatar.png" class="w-32 h-32 rounded-full object-cover mb-4" />
+        <input type="file" id="imageUpload" accept="image/*" class="text-sm file:bg-purple-600 file:text-white file:px-4 file:py-2 file:rounded-full file:cursor-pointer" />
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-lg font-semibold mb-1">Name</label>
+          <input type="text" value="Nitish Mishra" class="w-full p-3 rounded-xl bg-white/10 dark:bg-gray-800 border border-purple-400/30" readonly />
+        </div>
+        <div>
+          <label class="block text-lg font-semibold mb-1">Email</label>
+          <input type="text" value="nitishm1803@gmail.com" class="w-full p-3 rounded-xl bg-white/10 dark:bg-gray-800 border border-purple-400/30" readonly />
+        </div>
+        <div>
+          <label class="block text-lg font-semibold mb-1">Username</label>
+          <input type="text" value="nitishdev" class="w-full p-3 rounded-xl bg-white/10 dark:bg-gray-800 border border-purple-400/30" readonly />
+        </div>
+        <div>
+          <label class="block text-lg font-semibold mb-1">Phone</label>
+          <input type="text" value="+91-8652185935" class="w-full p-3 rounded-xl bg-white/10 dark:bg-gray-800 border border-purple-400/30" readonly />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="backdrop-blur-md bg-white/10 dark:bg-gray-900/10 border-t border-purple-800/20 py-8 mt-20">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
+      
+      <!-- Left: Brand Info -->
+      <div>
+        <h3 class="text-2xl font-bold text-purple-500">Data Horizon</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Empowering IoT with intelligence & insight.</p>
+      </div>
+  
+      <!-- Center: Links -->
+      <div class="flex space-x-6 text-sm text-gray-600 dark:text-gray-400">
+        <a href="#powerful-features" class="hover:text-purple-400 transition">Features</a>
+        <a href="#how-it-works" class="hover:text-purple-400 transition">How It Works</a>
+        <a href="#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+        <a href="#cta" class="hover:text-purple-400 transition">Get Started</a>
+      </div>
+  
+      <!-- Right: Copyright -->
+      <div class="text-sm text-gray-600 dark:text-gray-400">
+        © <span id="year"></span> Data Horizon. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Load saved image from localStorage
+    const savedImg = localStorage.getItem('profileImage');
+    const profileImage = document.getElementById('profileImage');
+    const navProfilePic = document.getElementById('navProfilePic');
+
+    if (savedImg) {
+      profileImage.src = savedImg;
+      if (navProfilePic) navProfilePic.src = savedImg;
+    }
+
+    // Upload image
+    const imageUpload = document.getElementById('imageUpload');
+    imageUpload.addEventListener('change', () => {
+      const file = imageUpload.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const imgData = e.target.result;
+          localStorage.setItem('profileImage', imgData);
+          profileImage.src = imgData;
+          if (navProfilePic) navProfilePic.src = imgData;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Optional: handle logout, etc.
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('profileImage');
+      location.href = "/login.html";
+    }
+  </script>
+</body>
+</html>
